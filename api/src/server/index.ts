@@ -19,11 +19,10 @@ app.use(cors());
 app.use(routes);
 
 // Middlware
-app.use(Middleware.erro);
 app.use(Middleware.pageNotFound);
+app.use(Middleware.erro);
 
 
 
 // Listen
-app.listen(3333);
-console.log('Api rodando na porta 3333');
+app.listen(3333, () => console.log('Server is running port 3333'));
