@@ -1,14 +1,15 @@
 import db from '../database/connections';
+import { query } from 'express';
 
 // Interfaces
 interface IUsers {
-  id?: number
+  id?: number | string;
   login: string;
   password: string;
 }
 
 class UserModel {
-  select(id?: number) {
+  getAll(id?: number) {
     try {
       const query = db('users')
         .select('*')
@@ -25,15 +26,74 @@ class UserModel {
     }
 
   }
-  
-  
-  insert(data: IUsers) {
+   
+  findById(id: number) {
+    try {
+      
+      const query = db('users')
+        .select('*')
+        .where({ id });
 
-    const query = db('users').insert(data);
-    
-    return query;
+      return query;
+
+    } catch (error) {
+
+      throw error;
+   
+    }
   }
 
+  insert(data: IUsers) {
+
+    try {
+
+      const query = db('users').insert(data);
+      
+      return query;
+      
+    } catch (error) {
+      
+      throw error;
+      
+    }
+
+  }
+
+  update(data: IUsers) {
+    try {
+      
+      const { id, login, password } = data;
+
+      const query = db('users')
+      .select('*')
+      .where({ id })
+
+      if(login && password) {
+        return query.update({login, password});
+      }
+
+      if(login) {
+        return query.update({login});
+      }
+
+      if(password) {
+        return query.update({password});
+      }
+      
+      return query;
+
+    } catch (error) {
+      
+      throw error
+
+    }
+  }
+
+  delete(id: number) {
+    const query = db('users').where({id}).delete();
+
+    return query;
+  }
 
 }
 
