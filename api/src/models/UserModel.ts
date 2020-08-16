@@ -90,7 +90,7 @@ class UserModel {
   }
 
   delete(id: number) {
-    const query = db('users').where({id}).delete();
+    const query = db('users').where({id}).del();
 
     return query;
   }
