@@ -1,5 +1,4 @@
 import db from '../database/connections';
-import { query } from 'express';
 
 // Interfaces
 interface IUsers {
@@ -50,7 +49,7 @@ class UserModel {
         .select('*')
         .where({login});
 
-      return query;
+      return query.first();
 
     } catch (error) {
       

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import bcrypt from 'bcryptjs';
 
 // Model
 import UserModel from '../models/UserModel';
@@ -42,7 +43,7 @@ class UserController {
 
   async create(request: Request, response: Response) {
     try {
-      const { login, password } = request.body;
+      let { login, password } = request.body;
   
       if(!login || !password) {
         return response.status(400).json({
@@ -50,19 +51,30 @@ class UserController {
         });
       }
   
-      const data = {login, password}
-  
       if((await UserModel.findOne(login)).length) {
         return response.status(400).json({
           message: 'user already exists;'
         })
       }
+      
+      
+      bcrypt.genSalt(12, function(err, salt) {
+        bcrypt.hash(password, salt, async function(err, hash) {
+          if(err) {
+            return response.status(400).json({
+            message: 'Error saving data'
+            });
+          }
 
-      const user = await UserModel.insert(data);
-  
+          const data = {login, password: hash}
+          const user = await UserModel.insert(data);
+        });
+      });
+      
       return response.status(201).json({
         message: 'Dados inseridos com sucesso!'
       });
+  
       
     } catch (error) {
       return response.status(500).json({
