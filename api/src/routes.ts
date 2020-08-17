@@ -1,12 +1,15 @@
 import express from 'express';
 
+// Middlware
+import Middleware from './middleware/Middleware';
+
 const routes = express.Router();
 
 // Controllers
 import UserController from './controllers/UserController';
 import TypesCollectionsController from './controllers/TypesCollectionsController';
 import CollectController from './controllers/CollectController';
-
+import AuthenticateController from './controllers/AuthenticateController';
 
 routes.get('/', (request, response) => {
   return response.status(200).json({
@@ -14,6 +17,11 @@ routes.get('/', (request, response) => {
     api: "Coleta de Diabetes e Pressão"
   });
 });
+
+routes.post('/authenticate/login', AuthenticateController.login);
+routes.get('/authenticate/logout', AuthenticateController.logout);
+
+routes.use(Middleware.autheticate);
 
 routes.get('/users', UserController.index);
 routes.get('/users/id/:id', UserController.show);
@@ -27,7 +35,5 @@ routes.get('/typesCollections/id/:id', TypesCollectionsController.show);
 routes.get('/collect', CollectController.index);
 routes.get('/collect/id/:id', CollectController.show);
 routes.post('/collect', CollectController.create);
-
-
 
 export default routes;
