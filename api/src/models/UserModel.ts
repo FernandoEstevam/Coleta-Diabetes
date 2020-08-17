@@ -26,7 +26,7 @@ class UserModel {
     }
 
   }
-   
+  
   findById(id: number) {
     try {
       
@@ -39,7 +39,23 @@ class UserModel {
     } catch (error) {
 
       throw error;
-   
+
+    }
+  }
+
+  findOne(login: string) {
+    try {
+      
+      const query = db('users')
+        .select('*')
+        .where({login});
+
+      return query;
+
+    } catch (error) {
+      
+      throw error;
+
     }
   }
 

@@ -41,31 +41,44 @@ class UserController {
   }
 
   async create(request: Request, response: Response) {
-    const { login, password } = request.body;
+    try {
+      const { login, password } = request.body;
+  
+      if(!login || !password) {
+        return response.status(400).json({
+          error: "Informe usuário e senha!"
+        });
+      }
+  
+      const data = {login, password}
+  
+      if((await UserModel.findOne(login)).length) {
+        return response.status(400).json({
+          message: 'user already exists;'
+        })
+      }
 
-    if(!login || !password) {
-      return response.status(400).json({
-        error: "Informe usuário e senha!"
+      const user = await UserModel.insert(data);
+  
+      return response.status(201).json({
+        message: 'Dados inseridos com sucesso!'
       });
+      
+    } catch (error) {
+      return response.status(500).json({
+        message: error.message
+      })
     }
-
-    const data = {login, password}
-
-    const user = await UserModel.insert(data);
-
-    return response.status(201).json({
-      message: 'Dados inseridos com sucesso!'
-    });
 
   }
 
   async update(request: Request, response: Response) {
-   
+  
     try {
       
       const { id } = request.params;
       const { login, password } = request.body;
-   
+  
       const _id = Number(id);
   
       const userId = await UserModel.findById(_id);
