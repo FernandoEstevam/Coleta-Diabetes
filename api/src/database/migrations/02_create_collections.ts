@@ -7,17 +7,21 @@ export async function up(knex: Knex) {
     table.date('date').notNullable();
     table.time('time').notNullable();
     table.string('collect').notNullable();
-    table.integer('user_id').notNullable();
+
+    table.integer('user_id').notNullable().unsigned();
     table.foreign('user_id')
-      .references('users.id')
+      .references('id')
+      .inTable('users')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
-    table.integer('type_collect_id').notNullable();
-    table.foreign('type_collect_id')
-      .references('types_collections.id')
-      .onDelete('CASCADE')
-      .onUpdate('CASCADE')
 
+    table.integer('type_collections_id').notNullable().unsigned();
+    table.foreign('type_collections_id')
+      .references('id')
+      .inTable('types_collections')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
+    
     table.timestamps(true,true);
   })
 }
