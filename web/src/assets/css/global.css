@@ -1,0 +1,60 @@
+:root {
+  /*  font-size 9.6 */
+  font-size: 60%;
+
+  --color-background: #FFF;
+  --color-background-secudary: #F5F5F5;
+  --color-background-home: #8257E5;
+  --color-button-diabetes: #F46275;
+  --color-button-pressao: #69D6F4;
+  --color-button-inicio: #774FD1;
+  --color-button-login: #04D361;
+  --color-button-red: #F20505;
+  --color-box: #F0F0F7;
+  --color-text-primary: #A0A0B2;
+  --color-text-titulo: #8257E5;
+  --color-text-red: #F20505;
+  --color-text-green: #2C880B;
+  --color-text-white: #FFF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100vh;
+}
+
+body {
+  background-color: var(--color-background);
+}
+
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body,
+input,
+button,
+textarea {
+  font: 500 1.6rem Poppins;
+}
+
+.container {
+  width: 90vw;
+  max-width: 700px;
+}
+
+@media (min-width: 700px) {
+  :root {
+    /* font-size */
+    font-size: 62.5%;
+  }
+}
