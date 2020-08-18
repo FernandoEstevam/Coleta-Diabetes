@@ -2,7 +2,7 @@
   /*  font-size 9.6 */
   font-size: 60%;
 
-  --color-background: #FFF;
+  --color-background-white: #FFF;
   --color-background-secudary: #F5F5F5;
   --color-background-home: #8257E5;
   --color-button-diabetes: #F46275;
@@ -16,6 +16,7 @@
   --color-text-red: #F20505;
   --color-text-green: #2C880B;
   --color-text-white: #FFF;
+  --color-text-placeholder: #B4B0B0;
 }
 
 * {
@@ -45,6 +46,15 @@ input,
 button,
 textarea {
   font: 500 1.6rem Poppins;
+}
+
+::placeholder {
+  color: var(--color-text-placeholder);
+  font-weight: 400;
+}
+
+img {
+  max-width: 100%;
 }
 
 .container {
