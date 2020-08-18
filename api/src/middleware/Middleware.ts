@@ -54,7 +54,7 @@ class Middleware {
     } catch (error) {
 
       throw error;
-    
+
     }
   }
 
